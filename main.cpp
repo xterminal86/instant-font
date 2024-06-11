@@ -2,6 +2,24 @@
 
 bool IsRunning = true;
 
+const std::vector<std::string> LoremIpsum =
+{
+  "Lorem ipsum dolor sit amet," ,
+  "consectetur adipiscing elit,",
+  "sed do eiusmod tempor incididunt",
+  "ut labore et dolore magna aliqua.",
+  "Ut enim ad minim veniam, quis",
+  "nostrud exercitation ullamco",
+  "laboris nisi ut aliquip ex ea",
+  "commodo consequat. Duis aute irure",
+  "dolor in reprehenderit in voluptate",
+  "velit esse cillum dolore eu fugiat",
+  "nulla pariatur. Excepteur sint",
+  "occaecat cupidatat non proident,",
+  "sunt in culpa qui officia deserunt",
+  "mollit anim id est laborum."
+};
+
 // =============================================================================
 
 void HandleEvent(const SDL_Event& evt)
@@ -15,7 +33,7 @@ void HandleEvent(const SDL_Event& evt)
 
 // =============================================================================
 
-int main()
+int main(int argc, char* argv[])
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0)
   {
@@ -61,14 +79,43 @@ int main()
 
     IF::Instance().DumpTexture();
 
-    IF::Instance().Print(640, 100, "01234 56789");
-    IF::Instance().Print(640, 150, "01234 56789", 0x00FFFF);
-    IF::Instance().Print(640, 200, "01234 56789", 0xFF0000, IF::TextAlignment::LEFT, 3);
-    IF::Instance().Print(640, 300, "01234 56789", 0x00FF00, IF::TextAlignment::RIGHT, 3);
-    IF::Instance().Print(640, 400, "01234 56789", 0x0000FF, IF::TextAlignment::CENTER, 3);
+    int lineInd = 0;
+    for (auto& line : LoremIpsum)
+    {
+      IF::Instance().Print(0, 300 + lineInd, line);
+      lineInd += 9;
+    }
+
+    IF::Instance().Print(640, 400, "01234 56789");
+    IF::Instance().Print(640, 450, "01234 56789", 0x00FFFF);
+
+    IF::Instance().Print(840, 200,
+                         "01234 56789",
+                         0xFF0000,
+                         IF::TextAlignment::LEFT,
+                         2.0);
+
+    IF::Instance().Print(840, 220,
+                         "01234 56789",
+                         0x00FF00,
+                         IF::TextAlignment::RIGHT,
+                         2.0);
+
+    IF::Instance().Print(840, 240,
+                         "01234 56789",
+                         0x0000FF,
+                         IF::TextAlignment::CENTER,
+                         2.0);
+
     IF::Instance().Printf(640, 500,
-                          IF::TextParams::Default(),
+                          IF::TextParams::Set(),
                           "MEANING OF LIFE = %d", 42);
+
+    IF::Instance().Printf(640, 500,
+                          IF::TextParams::Set(0xFFFFFF,
+                                              IF::TextAlignment::LEFT,
+                                              4.0),
+                          "SCALED");
 
     SDL_RenderPresent(r);
   }
