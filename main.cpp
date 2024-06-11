@@ -27,7 +27,7 @@ int main()
 
   SDL_Window* window = SDL_CreateWindow("Printer test",
                                         0, 0,
-                                        800, 600,
+                                        800, 800,
                                         SDL_WINDOW_SHOWN);
 
   SDL_Renderer* r = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -44,9 +44,7 @@ int main()
     }
   }
 
-  IF::Font font;
-
-  font.Init(r);
+  IF::Instance().Init(r);
 
   SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
 
@@ -61,7 +59,7 @@ int main()
 
     SDL_RenderClear(r);
 
-    SDL_RenderCopy(r, font.GetFontTexture(), nullptr, nullptr);
+    IF::Instance().DumpTexture();
 
     SDL_RenderPresent(r);
   }
