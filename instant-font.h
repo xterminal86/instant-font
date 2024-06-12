@@ -152,6 +152,12 @@ class IF
                TextAlignment align = TextAlignment::LEFT,
                double scaleFactor = 1.0)
     {
+      if (not _initialized)
+      {
+        SDL_Log("Font manager is not initialized!");
+        return;
+      }
+
       SaveColor();
 
       const auto& clr = HTML2RGB(color);
@@ -226,6 +232,12 @@ class IF
                 const std::string& formatString,
                 Args ... args)
     {
+      if (not _initialized)
+      {
+        SDL_Log("Font manager is not initialized!");
+        return;
+      }
+
       static size_t size = ::snprintf(nullptr,
                                       0,
                                       formatString.data(),
