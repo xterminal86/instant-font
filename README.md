@@ -1,4 +1,6 @@
 # INSTANT FONT
 
-Header-only library for embedded text output using SDL2 with no additional 
+Header-only library for bitmap text output using SDL2 with no additional 
 dependencies.
+
+![](screenshot.png)

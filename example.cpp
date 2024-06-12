@@ -43,9 +43,9 @@ int main(int argc, char* argv[])
 
   SDL_LogSetAllPriority(SDL_LOG_PRIORITY_DEBUG);
 
-  SDL_Window* window = SDL_CreateWindow("Printer test",
-                                        0, 0,
-                                        1280, 720,
+  SDL_Window* window = SDL_CreateWindow("Instant Font",
+                                        50, 50,
+                                        800, 600,
                                         SDL_WINDOW_SHOWN);
 
   SDL_Renderer* r = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -68,8 +68,12 @@ int main(int argc, char* argv[])
 
   SDL_Event evt;
 
+  uint64_t dt = 0;
+
   while (IsRunning)
   {
+    uint64_t before = SDL_GetTicks64();
+
     while (SDL_PollEvent(&evt))
     {
       HandleEvent(evt);
@@ -77,7 +81,7 @@ int main(int argc, char* argv[])
 
     SDL_RenderClear(r);
 
-    IF::Instance().DumpTexture();
+    IF::Instance().ShowFontBitmap();
 
     int lineInd = 0;
     for (auto& line : LoremIpsum)
@@ -86,38 +90,61 @@ int main(int argc, char* argv[])
       lineInd += 9;
     }
 
-    IF::Instance().Print(640, 400, "01234 56789");
-    IF::Instance().Print(640, 450, "01234 56789", 0x00FFFF);
+    IF::Instance().Print(400, 300, "Simple print");
+    IF::Instance().Print(400, 310, "Colored print", 0xFFFF00);
 
-    IF::Instance().Print(840, 200,
-                         "01234 56789",
+    IF::Instance().Print(400, 320,
+                         "Scale = 1.5",
+                         0xFFFFFF,
+                         IF::TextAlignment::LEFT,
+                         1.5);
+
+    IF::Instance().Print(400, 340,
+                         "Scale = 2",
+                         0xFFFFFF,
+                         IF::TextAlignment::LEFT,
+                         2.0);
+
+    IF::Instance().Print(400, 360,
+                         "Scale = 3",
+                         0xFFFFFF,
+                         IF::TextAlignment::LEFT,
+                         3.0);
+
+    IF::Instance().Printf(400, 420,
+                          IF::TextParams::Set(0xFFFFFF,
+                                              IF::TextAlignment::LEFT,
+                                              2.0),
+                          "Delta time = %llu", dt);
+
+    IF::Instance().Print(570, 440,
+                         "Left aligned",
                          0xFF0000,
                          IF::TextAlignment::LEFT,
                          2.0);
 
-    IF::Instance().Print(840, 220,
-                         "01234 56789",
+    IF::Instance().Print(570, 460,
+                         "Right aligned",
                          0x00FF00,
                          IF::TextAlignment::RIGHT,
                          2.0);
 
-    IF::Instance().Print(840, 240,
-                         "01234 56789",
-                         0x0000FF,
+    IF::Instance().Print(570, 480,
+                         "Centered",
+                         0x0088FF,
                          IF::TextAlignment::CENTER,
                          2.0);
 
-    IF::Instance().Printf(640, 500,
-                          IF::TextParams::Set(),
-                          "MEANING OF LIFE = %d", 42);
 
-    IF::Instance().Printf(640, 500,
-                          IF::TextParams::Set(0xFFFFFF,
-                                              IF::TextAlignment::LEFT,
-                                              4.0),
-                          "SCALED");
+    IF::Instance().Print(400, 520,
+                         "Non-printable: Дba",
+                         0xFFFFFF,
+                         IF::TextAlignment::LEFT,
+                         2.0);
 
     SDL_RenderPresent(r);
+
+    dt = SDL_GetTicks64() - before;
   }
 
   SDL_Log("Goodbye!");
