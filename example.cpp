@@ -64,15 +64,13 @@ int main(int argc, char* argv[])
 
   IF::Instance().Init(r);
 
-  SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
-
   SDL_Event evt;
 
   uint64_t dt = 0;
 
   while (IsRunning)
   {
-    uint64_t before = SDL_GetTicks64();
+    uint64_t before = SDL_GetTicks();
 
     while (SDL_PollEvent(&evt))
     {
@@ -80,6 +78,18 @@ int main(int argc, char* argv[])
     }
 
     SDL_RenderClear(r);
+
+    SDL_SetRenderDrawColor(r, 32, 32, 32, 255);
+
+    static SDL_Rect box;
+    box.x = 0;
+    box.y = 0;
+    box.w = 750;
+    box.h = 280;
+
+    SDL_RenderFillRect(r, &box);
+
+    SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
 
     IF::Instance().ShowFontBitmap();
 
@@ -144,7 +154,7 @@ int main(int argc, char* argv[])
 
     SDL_RenderPresent(r);
 
-    dt = SDL_GetTicks64() - before;
+    dt = SDL_GetTicks() - before;
   }
 
   SDL_Log("Goodbye!");
