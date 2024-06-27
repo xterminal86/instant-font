@@ -4,20 +4,14 @@ bool IsRunning = true;
 
 const std::vector<std::string> LoremIpsum =
 {
-  "Lorem ipsum dolor sit amet," ,
-  "consectetur adipiscing elit,",
-  "sed do eiusmod tempor incididunt",
-  "ut labore et dolore magna aliqua.",
-  "Ut enim ad minim veniam, quis",
-  "nostrud exercitation ullamco",
-  "laboris nisi ut aliquip ex ea",
-  "commodo consequat. Duis aute irure",
-  "dolor in reprehenderit in voluptate",
-  "velit esse cillum dolore eu fugiat",
-  "nulla pariatur. Excepteur sint",
-  "occaecat cupidatat non proident,",
-  "sunt in culpa qui officia deserunt",
-  "mollit anim id est laborum."
+  "One, two, three, four.",
+  "ax += 5, by = 6%, dx/dy = 33$, i++, j--",
+  "db qp ad ab ,.- dx dz dy",
+  "#!/bin/bash",
+  "A quick brown fox jumps over a lazy dog.",
+  "ls -la ; echo \"test \\n\" && rm -rf /",
+  "SELECT * FROM table WHERE `id` >= 42 AND `rating` = '30%'",
+  R"({ "root" : { "key1" : "value" }, { "key2" : 33 } })",
 };
 
 // =============================================================================
@@ -97,33 +91,33 @@ int main(int argc, char* argv[])
     for (auto& line : LoremIpsum)
     {
       IF::Instance().Print(0, 300 + lineInd, line);
-      lineInd += 9;
+      lineInd += 10;
     }
 
-    IF::Instance().Print(400, 300, "Simple print");
-    IF::Instance().Print(400, 310, "Colored print", 0xFFFF00);
+    IF::Instance().Print(650, 290, "Simple print");
+    IF::Instance().Print(650, 300, "Colored print", 0xFFFF00);
 
-    IF::Instance().Print(400, 320,
+    IF::Instance().Print(780, 320,
                          "Scale = 1.5",
                          0xFFFFFF,
-                         IF::TextAlignment::LEFT,
+                         IF::TextAlignment::RIGHT,
                          1.5);
 
-    IF::Instance().Print(400, 340,
+    IF::Instance().Print(780, 340,
                          "Scale = 2",
                          0xFFFFFF,
-                         IF::TextAlignment::LEFT,
+                         IF::TextAlignment::RIGHT,
                          2.0);
 
-    IF::Instance().Print(400, 360,
+    IF::Instance().Print(780, 360,
                          "Scale = 3",
                          0xFFFFFF,
-                         IF::TextAlignment::LEFT,
+                         IF::TextAlignment::RIGHT,
                          3.0);
 
-    IF::Instance().Printf(400, 420,
+    IF::Instance().Printf(780, 420,
                           IF::TextParams::Set(0xFFFFFF,
-                                              IF::TextAlignment::LEFT,
+                                              IF::TextAlignment::RIGHT,
                                               2.0),
                           "Delta time = %llu", dt);
 
