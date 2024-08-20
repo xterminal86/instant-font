@@ -10,7 +10,7 @@
 //
 // IF for "Instant Font"
 //
-// (c) xterminal86 12.06.2024
+// (c) xterminal86 14.07.2024
 //
 class IF
 {
