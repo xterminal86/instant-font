@@ -56,7 +56,10 @@ int main(int argc, char* argv[])
     }
   }
 
-  IF::Instance().Init(r);
+  if (not IF::Instance().Init(r))
+  {
+    return 1;
+  }
 
   SDL_Event evt;
 
@@ -141,7 +144,7 @@ int main(int argc, char* argv[])
 
 
     IF::Instance().Print(400, 520,
-                         "Non-printable: Дba",
+                         "Non-printable: Дbё",
                          0xFFFFFF,
                          IF::TextAlignment::LEFT,
                          2.0);

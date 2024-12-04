@@ -32,12 +32,12 @@ class IF
 
     // -----------------------------------------------------------------------
 
-    void Init(SDL_Renderer* renderer)
+    bool Init(SDL_Renderer* renderer)
     {
       if (_initialized)
       {
         SDL_Log("Font manager already initialized!");
-        return;
+        return true;
       }
 
       _atlasWidth  = _numTilesH * _fontSize;
@@ -51,7 +51,7 @@ class IF
       if (_fontAtlas == nullptr)
       {
         SDL_Log("%s", SDL_GetError());
-        return;
+        return false;
       }
 
       uint8_t* bytes = nullptr;
@@ -60,7 +60,7 @@ class IF
       if (res < 0)
       {
         SDL_Log("%s", SDL_GetError());
-        return;
+        return false;
       }
 
       auto PutPixel = [this, bytes](size_t x,
@@ -117,10 +117,12 @@ class IF
       if (res < 0)
       {
         SDL_Log("%s", SDL_GetError());
-        return;
+        return false;
       }
 
       _initialized = true;
+
+      return true;
     }
 
     // -------------------------------------------------------------------------
